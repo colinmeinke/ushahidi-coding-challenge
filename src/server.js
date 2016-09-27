@@ -3,7 +3,13 @@ import path from 'path';
 
 const app = express();
 
-app.get( '/', ( req, res ) => res.send( 'Hello world' ));
+app.get( '/', ( req, res ) => {
+  res.sendFile( path.join( `${ __dirname }/layout.html` ));
+});
+
+app.get( '/client.js', ( req, res ) => {
+  res.sendFile( path.join( `${ __dirname }/client.js` ));
+});
 
 app.listen( 3000, () => {
   console.log( 'Listening on http://localhost:3000' );
