@@ -3,6 +3,14 @@ import path from 'path';
 
 const app = express();
 
+app.use(({ path }, res, next ) => {
+  if ( path === '/data.json' ) {
+    res.setHeader( 'Access-Control-Allow-Origin', '*' );
+  }
+
+  return next();
+});
+
 app.use( express.static( 'dist/assets' ));
 
 app.get( '/', ( req, res ) => {

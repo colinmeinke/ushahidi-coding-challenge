@@ -26,6 +26,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-babel": "^6.1.2",
+    "gulp-json-transform": "^0.4.2",
     "gulp-sass": "^2.3.2",
     "leaflet": "^1.0.0",
     "normalize-scss": "^5.0.3",

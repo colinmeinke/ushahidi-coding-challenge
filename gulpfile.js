@@ -3,7 +3,9 @@ const babel = require( 'gulp-babel' );
 const browserify = require( 'browserify' );
 const browserSync = require( 'browser-sync' ).create();
 const buffer = require( 'vinyl-buffer' );
+const filterData = require( './filter-data' );
 const gulp = require( 'gulp' );
+const jsonTransform = require( 'gulp-json-transform' );
 const sass = require( 'gulp-sass' );
 const source = require( 'vinyl-source-stream' );
 
@@ -11,6 +13,7 @@ gulp.task( 'build', [ 'build:data', 'build:templates', 'build:vendor', 'build:cs
 
 gulp.task( 'build:data', () => {
   gulp.src( 'src/data.json' )
+    .pipe( jsonTransform( filterData ))
     .pipe( gulp.dest( 'dist/assets' ))
 });
 
