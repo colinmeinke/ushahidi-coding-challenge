@@ -1,12 +1,13 @@
 const autoprefixer = require( 'gulp-autoprefixer' );
 const babel = require( 'gulp-babel' );
 const browserify = require( 'browserify' );
+const browserSync = require( 'browser-sync' ).create();
 const buffer = require( 'vinyl-buffer' );
 const gulp = require( 'gulp' );
 const sass = require( 'gulp-sass' );
 const source = require( 'vinyl-source-stream' );
 
-gulp.task( 'build', [ 'build:assets', 'build:css', 'build:client', 'build:server' ]);
+gulp.task( 'build', [ 'build:assets', 'build:css', 'build:js' ]);
 
 gulp.task( 'build:assets', () => {
   gulp.src( 'src/layout.html' )
@@ -25,7 +26,10 @@ gulp.task( 'build:css', () => gulp.src( 'src/sass/styles.scss' )
     browsers: [ 'last 2 versions', 'ie >= 10' ],
   }))
   .pipe( gulp.dest( 'dist' ))
+  .pipe( browserSync.stream())
 );
+
+gulp.task( 'build:js', [ 'build:client', 'build:server' ]);
 
 gulp.task( 'build:client', () => browserify( 'src/client.js' )
   .bundle()
@@ -33,10 +37,25 @@ gulp.task( 'build:client', () => browserify( 'src/client.js' )
   .pipe( source( 'client.js' ))
   .pipe( buffer())
   .pipe( gulp.dest( 'dist' ))
+  .pipe( browserSync.reload({ stream: true }))
 );
 
 gulp.task( 'build:server', () => {
   gulp.src( 'src/server.js' )
     .pipe( babel())
-    .pipe( gulp.dest( 'dist' ));
+    .pipe( gulp.dest( 'dist' ))
+    .pipe( browserSync.reload({ stream: true }));
 });
+
+gulp.task( 'watch', [ 'build' ], () => {
+  browserSync.init({
+    proxy: 'localhost:3000',
+    port: 4000,
+  });
+
+  gulp.watch( 'src/sass/**/*.scss', [ 'build:css' ]);
+  gulp.watch( 'src/**/*.js', [ 'build:js' ]);
+  gulp.watch( '**/*.html', () => browserSync.reload());
+});
+
+gulp.task( 'default', [ 'watch' ]);
