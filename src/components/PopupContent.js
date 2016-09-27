@@ -8,14 +8,16 @@ const PopupContent = ({ description, objectives, title }) => (
     <p className="content__description">
       { description }
     </p>
-    ( objectives ? (
-      <h3 className="content__subtitle">
-        Objectives
-      </h3>
-      <p className="content__objective">
-        { objectives }
-      </p>
-    ) : null )
+    {( objectives ? (
+      <div class="content__objective">
+        <h3 className="content__subtitle">
+          Objectives
+        </h3>
+        <p className="content__description">
+          { objectives }
+        </p>
+      </div>
+    ) : null )}
   </section>
 );
 
