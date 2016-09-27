@@ -13,8 +13,7 @@
   "author": "Colin Meinke <hello@colinmeinke.com> (http://colinmeinke.com/)",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.0",
-    "react-dom": "^15.3.2"
+    "express": "^4.14.0"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
@@ -28,9 +27,11 @@
     "gulp-babel": "^6.1.2",
     "gulp-json-transform": "^0.4.2",
     "gulp-sass": "^2.3.2",
-    "leaflet": "^1.0.0",
+    "leaflet": "^0.7.7",
     "normalize-scss": "^5.0.3",
     "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-leaflet": "^0.12.3",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "vinyl-buffer": "^1.0.0",

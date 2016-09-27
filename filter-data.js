@@ -18,9 +18,9 @@ const getLocation = ({ Location2_Secondary, Location1_EProMIS }) => {
   const secondary = Location1_EProMIS.filter( x => x );
 
   if ( primary.length === 2 ) {
-    return [ primary[ 0 ], primary[ 1 ]];
+    return [ parseFloat( primary[ 0 ]), parseFloat( primary[ 1 ])];
   } else if ( secondary.length === 2 ) {
-    return [ secondary[ 0 ], secondary[ 1 ]];
+    return [ parseFloat( secondary[ 0 ]), parseFloat( secondary[ 1 ])];
   }
 
   return null;

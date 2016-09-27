@@ -1,9 +1,6 @@
-import Leaflet from 'leaflet';
-import Marker from './Marker';
+import { Map as LeafletMap, TileLayer } from 'react-leaflet';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-
-Leaflet.Icon.Default.imagePath = 'vendor/leaflet';
 
 class Map extends React.Component {
   constructor ( props ) {
@@ -18,39 +15,19 @@ class Map extends React.Component {
     };
   }
 
-  initMap () {
-    this.map = Leaflet
-      .map( 'map' )
-      .setView([ this.state.lat, this.state.lng ], this.state.zoom );
-
-    Leaflet
-      .tileLayer( this.props.tileUrl, { attribution: this.props.attribution })
-      .addTo( this.map );
-  }
-
-  addMarker ({ description, location, objectives, title }) {
-    const [ lat, lng ] = location;
-
-    Leaflet
-      .marker([ lat, lng ])
-      .addTo( this.map )
-      .bindPopup( renderToString(
-        <Marker
-          description={ description }
-          objectives={ objectives }
-          title={ title }
-        />
-      ));
-  }
-
-  componentDidMount () {
-    this.initMap();
-    this.props.items.map( item => this.addMarker( item ));
-  }
-
   render () {
     return (
-      <section className="map" id="map"></section>
+      <LeafletMap
+        center={[ this.state.lat, this.state.lng ]}
+        className="map"
+        zoom={ this.state.zoom }
+      >
+        <TileLayer
+          attribution={ this.props.attribution }
+          url={ this.props.tileUrl }
+        />
+        { this.props.children }
+      </LeafletMap>
     );
   }
 };

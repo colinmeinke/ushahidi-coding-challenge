@@ -9,7 +9,7 @@ const jsonTransform = require( 'gulp-json-transform' );
 const sass = require( 'gulp-sass' );
 const source = require( 'vinyl-source-stream' );
 
-gulp.task( 'build', [ 'build:data', 'build:templates', 'build:vendor', 'build:css', 'build:js' ]);
+gulp.task( 'build', [ 'build:data', 'build:templates', 'build:css', 'build:js' ]);
 
 gulp.task( 'build:data', () => {
   gulp.src( 'src/data.json' )
@@ -20,11 +20,6 @@ gulp.task( 'build:data', () => {
 gulp.task( 'build:templates', () => {
   gulp.src( 'src/layout.html' )
     .pipe( gulp.dest( 'dist' ));
-});
-
-gulp.task( 'build:vendor', () => {
-  gulp.src( 'node_modules/leaflet/dist/images/**/*' )
-    .pipe( gulp.dest( 'dist/assets/vendor/leaflet' ));
 });
 
 gulp.task( 'build:css', () => gulp.src( 'src/sass/styles.scss' )
