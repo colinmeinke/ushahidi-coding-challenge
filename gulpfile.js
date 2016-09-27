@@ -9,9 +9,16 @@ const source = require( 'vinyl-source-stream' );
 
 gulp.task( 'build', [ 'build:assets', 'build:css', 'build:js' ]);
 
-gulp.task( 'build:assets', () => {
+gulp.task( 'build:assets', [ 'build:assets:templates', 'build:assets:vendor' ]);
+
+gulp.task( 'build:assets:templates', () => {
   gulp.src( 'src/layout.html' )
     .pipe( gulp.dest( 'dist' ));
+});
+
+gulp.task( 'build:assets:vendor', () => {
+  gulp.src( 'node_modules/leaflet/dist/images/**/*' )
+    .pipe( gulp.dest( 'dist/assets/vendor/leaflet' ));
 });
 
 gulp.task( 'build:css', () => gulp.src( 'src/sass/styles.scss' )
