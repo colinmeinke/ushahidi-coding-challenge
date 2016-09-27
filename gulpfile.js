@@ -7,16 +7,19 @@ const gulp = require( 'gulp' );
 const sass = require( 'gulp-sass' );
 const source = require( 'vinyl-source-stream' );
 
-gulp.task( 'build', [ 'build:assets', 'build:css', 'build:js' ]);
+gulp.task( 'build', [ 'build:data', 'build:templates', 'build:vendor', 'build:css', 'build:js' ]);
 
-gulp.task( 'build:assets', [ 'build:assets:templates', 'build:assets:vendor' ]);
+gulp.task( 'build:data', () => {
+  gulp.src( 'src/data.json' )
+    .pipe( gulp.dest( 'dist/assets' ))
+});
 
-gulp.task( 'build:assets:templates', () => {
+gulp.task( 'build:templates', () => {
   gulp.src( 'src/layout.html' )
     .pipe( gulp.dest( 'dist' ));
 });
 
-gulp.task( 'build:assets:vendor', () => {
+gulp.task( 'build:vendor', () => {
   gulp.src( 'node_modules/leaflet/dist/images/**/*' )
     .pipe( gulp.dest( 'dist/assets/vendor/leaflet' ));
 });
@@ -32,7 +35,7 @@ gulp.task( 'build:css', () => gulp.src( 'src/sass/styles.scss' )
   .pipe( autoprefixer({
     browsers: [ 'last 2 versions', 'ie >= 10' ],
   }))
-  .pipe( gulp.dest( 'dist' ))
+  .pipe( gulp.dest( 'dist/assets/css' ))
   .pipe( browserSync.stream())
 );
 
@@ -43,7 +46,7 @@ gulp.task( 'build:client', () => browserify( 'src/client.js' )
   .on( 'error', err => console.error( err ))
   .pipe( source( 'client.js' ))
   .pipe( buffer())
-  .pipe( gulp.dest( 'dist' ))
+  .pipe( gulp.dest( 'dist/assets/js' ))
   .pipe( browserSync.reload({ stream: true }))
 );
 

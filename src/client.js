@@ -2,6 +2,8 @@ import Map from './components/Map';
 import React from 'react';
 import { render } from 'react-dom';
 
+
+
 render(
   <Map
     initialLat={ -4.34104483883 }
