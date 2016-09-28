@@ -9,6 +9,7 @@ const gulp = require( 'gulp' );
 const jsonTransform = require( 'gulp-json-transform' );
 const sass = require( 'gulp-sass' );
 const source = require( 'vinyl-source-stream' );
+const uglify = require( 'gulp-uglify' );
 
 gulp.task( 'build', [ 'build:data', 'build:templates', 'build:css', 'build:js' ]);
 
@@ -48,14 +49,18 @@ gulp.task( 'build:css', () => gulp.src( 'src/sass/styles.scss' )
 
 gulp.task( 'build:js', [ 'build:client', 'build:server' ]);
 
-gulp.task( 'build:client', () => browserify( 'src/client.js' )
-  .bundle()
-  .on( 'error', err => console.error( err ))
-  .pipe( source( 'client.js' ))
-  .pipe( buffer())
-  .pipe( gulp.dest( 'dist/assets/js' ))
-  .pipe( browserSync.reload({ stream: true }))
-);
+gulp.task( 'build:client', () => {
+  process.env.NODE_ENV = 'production';
+
+  return browserify( 'src/client.js' )
+    .bundle()
+    .on( 'error', err => console.error( err ))
+    .pipe( source( 'client.js' ))
+    .pipe( buffer())
+    .pipe( uglify())
+    .pipe( gulp.dest( 'dist/assets/js' ))
+    .pipe( browserSync.reload({ stream: true }));
+});
 
 gulp.task( 'build:server', () => {
   gulp.src( 'src/server.js' )
