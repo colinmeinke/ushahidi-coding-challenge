@@ -20,7 +20,7 @@ const renderMap = ( counties, markers ) => render(
 
 const createMap = ([ counties, items ]) => {
   const markers = items
-    .map(({ description, location, objectives, title }) => ({
+    .map(({ county, description, location, objectives, title }) => ({
       content: (
         <PopupContent
           description={ description }
@@ -28,6 +28,7 @@ const createMap = ([ counties, items ]) => {
           title={ title }
         />
       ),
+      county,
       lat: location[ 0 ],
       lng: location[ 1 ],
     }));

@@ -1,6 +1,25 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
+const tallyCounties = ( tally, nextCounty ) => {
+  if ( tally.hasOwnProperty( nextCounty )) {
+    tally[ nextCounty ]++;
+  } else {
+    tally[ nextCounty ] = 0;
+  }
+
+  return tally;
+};
+
+const addCountyTally = ({ geometry, properties, type }, countyTally ) => ({
+  geometry,
+  properties: {
+    county: properties.county,
+    count: countyTally[ properties.county ] || 0,
+  },
+  type,
+});
+
 class Map extends React.Component {
   constructor ( props ) {
     super( props );
@@ -38,8 +57,19 @@ class Map extends React.Component {
   }
 
   addChoropleth () {
+    const { features, type } = this.props.counties;
+
+    const countyTally = this.props.markers
+      .map(({ county }) => county )
+      .reduce( tallyCounties, {});
+
+    const counties = {
+      features: features.map( county => addCountyTally( county, countyTally )),
+      type,
+    };
+
     L
-      .geoJson( this.props.counties )
+      .geoJson( counties )
       .addTo( this.map );
   }
 
