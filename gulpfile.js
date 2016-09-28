@@ -3,7 +3,8 @@ const babel = require( 'gulp-babel' );
 const browserify = require( 'browserify' );
 const browserSync = require( 'browser-sync' ).create();
 const buffer = require( 'vinyl-buffer' );
-const filterData = require( './filter-data' );
+const filterCounties = require( './filter-counties' );
+const filterItems = require( './filter-items' );
 const gulp = require( 'gulp' );
 const jsonTransform = require( 'gulp-json-transform' );
 const sass = require( 'gulp-sass' );
@@ -11,10 +12,18 @@ const source = require( 'vinyl-source-stream' );
 
 gulp.task( 'build', [ 'build:data', 'build:templates', 'build:css', 'build:js' ]);
 
-gulp.task( 'build:data', () => {
-  gulp.src( 'src/data.json' )
-    .pipe( jsonTransform( filterData ))
-    .pipe( gulp.dest( 'dist/assets' ))
+gulp.task( 'build:data', [ 'build:data:counties', 'build:data:items' ]);
+
+gulp.task( 'build:data:counties', () => {
+  gulp.src( 'src/data/counties.geojson' )
+    .pipe( jsonTransform( filterCounties ))
+    .pipe( gulp.dest( 'dist/assets' ));
+});
+
+gulp.task( 'build:data:items', () => {
+  gulp.src( 'src/data/items.json' )
+    .pipe( jsonTransform( filterItems ))
+    .pipe( gulp.dest( 'dist/assets' ));
 });
 
 gulp.task( 'build:templates', () => {

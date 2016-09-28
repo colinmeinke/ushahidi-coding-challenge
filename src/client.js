@@ -1,11 +1,13 @@
 import 'whatwg-fetch';
 import Map from './components/Map';
 import PopupContent from './components/PopupContent';
+import Promise from 'bluebird';
 import React from 'react';
 import { render } from 'react-dom';
 
-const renderMap = markers => render(
+const renderMap = ( counties, markers ) => render(
   <Map
+    counties={ counties }
     initialLat={ 0 }
     initialLng={ 38 }
     initialZoom={ 7 }
@@ -16,7 +18,7 @@ const renderMap = markers => render(
   document.querySelector( '.app' )
 );
 
-const createMap = items => {
+const createMap = ([ counties, items ]) => {
   const markers = items
     .map(({ description, location, objectives, title }) => ({
       content: (
@@ -30,10 +32,13 @@ const createMap = items => {
       lng: location[ 1 ],
     }));
 
-  renderMap( markers );
+  renderMap( counties, markers );
 };
 
-fetch( `//${ window.location.host }/items.json` )
-  .then(( response ) => response.json())
+Promise.all([
+  fetch( `//${ window.location.host }/counties.geojson` ),
+  fetch( `//${ window.location.host }/items.json` ),
+])
+  .then( responses => Promise.all( responses.map( res => res.json())))
   .then( createMap )
   .catch( err => console.error( err ));

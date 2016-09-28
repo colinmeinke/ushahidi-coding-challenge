@@ -37,9 +37,16 @@ class Map extends React.Component {
     this.map.addLayer( cluster );
   }
 
+  addChoropleth () {
+    L
+      .geoJson( this.props.counties )
+      .addTo( this.map );
+  }
+
   componentDidMount () {
     this.initMap();
     this.addClusterLayer();
+    this.addChoropleth();
   }
 
   render () {
