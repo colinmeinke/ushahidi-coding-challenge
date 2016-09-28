@@ -9,7 +9,7 @@ const PopupContent = ({ description, objectives, title }) => (
       { description }
     </p>
     {( objectives ? (
-      <div class="content__objective">
+      <div className="content__objective">
         <h3 className="content__subtitle">
           Objectives
         </h3>

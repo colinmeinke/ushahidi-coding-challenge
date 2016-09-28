@@ -1,4 +1,3 @@
-import { Map as LeafletMap, TileLayer } from 'react-leaflet';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
@@ -15,19 +14,37 @@ class Map extends React.Component {
     };
   }
 
+  initMap () {
+    this.map = L
+      .map( 'map' )
+      .setView([ this.state.lat, this.state.lng ], this.state.zoom );
+
+    L
+      .tileLayer( this.props.tileUrl, { attribution: this.props.attribution })
+      .addTo( this.map );
+  }
+
+  addClusterLayer () {
+    const cluster = L.markerClusterGroup();
+
+    this.props.markers.map(({ lat, lng, content }) => {
+      cluster.addLayer( L
+        .marker({ lat, lng })
+        .bindPopup( renderToString( content ))
+      );
+    });
+
+    this.map.addLayer( cluster );
+  }
+
+  componentDidMount () {
+    this.initMap();
+    this.addClusterLayer();
+  }
+
   render () {
     return (
-      <LeafletMap
-        center={[ this.state.lat, this.state.lng ]}
-        className="map"
-        zoom={ this.state.zoom }
-      >
-        <TileLayer
-          attribution={ this.props.attribution }
-          url={ this.props.tileUrl }
-        />
-        { this.props.children }
-      </LeafletMap>
+      <section className="map" id="map"></section>
     );
   }
 };
