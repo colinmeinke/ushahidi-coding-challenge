@@ -12,7 +12,7 @@ const renderMap = ( counties, markers ) => render(
     initialLng={ 38 }
     initialZoom={ 7 }
     markers={ markers }
-    tileUrl="https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY29saW5tZWlua2UiLCJhIjoiY2l0bGo5MTM5MDAxODJvcDg3bmdnN2plYiJ9.4TtGWJpcv6h99gwDqtNNMA
+    tileUrl="https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiY29saW5tZWlua2UiLCJhIjoiY2l0bGo5MTM5MDAxODJvcDg3bmdnN2plYiJ9.4TtGWJpcv6h99gwDqtNNMA
 "
   />,
   document.querySelector( '.app' )

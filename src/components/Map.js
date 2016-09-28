@@ -20,6 +20,27 @@ const addCountyTally = ({ geometry, properties, type }, countyTally ) => ({
   type,
 });
 
+const getColor = c => (
+  c < 10 ? '#f7fcf5' :
+  c < 20 ? '#e5f5e0' :
+  c < 30 ? '#c7e9c0' :
+  c < 40 ? '#a1d99b' :
+  c < 50 ? '#74c476' :
+  c < 60 ? '#41ab5d' :
+  c < 70 ? '#238b45' :
+  c < 80 ? '#006d2c' :
+  '#00441b'
+);
+
+const styleCounty = county => ({
+  fillColor: getColor( county.properties.count ),
+  weight: 2,
+  opacity: 1,
+  color: '#74c476',
+  dashArray: '5',
+  fillOpacity: 0.8,
+});
+
 class Map extends React.Component {
   constructor ( props ) {
     super( props );
@@ -69,7 +90,7 @@ class Map extends React.Component {
     };
 
     L
-      .geoJson( counties )
+      .geoJson( counties, { style: styleCounty })
       .addTo( this.map );
   }
 
