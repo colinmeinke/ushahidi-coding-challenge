@@ -9,3 +9,6 @@ npm start
 ```
 
 You should now be able to view the project at [http://localhost:3000](http://localhost:3000).
+
+You can also view the project at
+[https://ushahidi-test.now.sh](https://ushahidi-test.now.sh).

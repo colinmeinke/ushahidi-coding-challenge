@@ -33,7 +33,7 @@ const createMap = items => {
   renderMap( markers );
 };
 
-fetch( 'http://localhost:3000/data.json' )
+fetch( `//${ window.location.host }/items.json` )
   .then(( response ) => response.json())
   .then( createMap )
   .catch( err => console.error( err ));
