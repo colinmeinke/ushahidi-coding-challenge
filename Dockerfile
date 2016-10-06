@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:6.2.0
+FROM mhart/alpine-node
 LABEL name "ushahidi-test"
 RUN mkdir /app
 WORKDIR /app
